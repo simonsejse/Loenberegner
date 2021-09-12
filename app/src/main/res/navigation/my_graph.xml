@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="dk.simonsejse.loenberegning.fragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/navigateFromHomeToSettings"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/from_left_side"
+            app:exitAnim="@anim/to_right_side"
+            app:popEnterAnim="@anim/from_right_side"
+            app:popExitAnim="@anim/to_left_side" />
+        <action
+            android:id="@+id/navigateFromHomeToCalcWithHours"
+            app:destination="@id/calcWithHoursFragment"
+            app:enterAnim="@anim/from_up"
+            app:exitAnim="@anim/to_down"
+            app:popEnterAnim="@anim/from_down"
+            app:popExitAnim="@anim/to_down" />
+        <action
+            android:id="@+id/navigateFromHomeToAddShifts"
+            app:destination="@id/addShiftFragment"
+            app:enterAnim="@anim/from_down"
+            app:exitAnim="@anim/to_up"
+            app:popEnterAnim="@anim/from_up"
+            app:popExitAnim="@anim/to_down" />
+        <action
+            android:id="@+id/navigateFromHomeToAllSalaries"
+            app:destination="@id/allSalariesFragment"
+            app:enterAnim="@anim/from_down"
+            app:exitAnim="@anim/to_up"
+            app:popEnterAnim="@anim/from_up"
+            app:popExitAnim="@anim/to_down" />
+        <action
+            android:id="@+id/navigateFromHomeToInfo"
+            app:destination="@id/infoFragment"
+            app:enterAnim="@anim/from_left_side"
+            app:exitAnim="@anim/to_left_side"
+            app:popEnterAnim="@anim/from_right_side"
+            app:popExitAnim="@anim/to_right_side" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="dk.simonsejse.loenberegning.fragments.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/calcWithHoursFragment"
+        android:name="dk.simonsejse.loenberegning.fragments.CalcWithHoursFragment"
+        android:label="fragment_calc_with_hours"
+        tools:layout="@layout/fragment_calc_with_hours" >
+        <action
+            android:id="@+id/navigateFromCalcWithHoursToSettings"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addShiftFragment"
+        android:name="dk.simonsejse.loenberegning.fragments.AddShiftFragment"
+        android:label="fragment_add_shift"
+        tools:layout="@layout/fragment_add_shift" >
+        <action
+            android:id="@+id/navigateFromAddShiftToHome"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/from_up"
+            app:exitAnim="@anim/to_down"
+            app:popEnterAnim="@anim/from_down"
+            app:popExitAnim="@anim/to_up"
+            app:popUpTo="@id/homeFragment" />
+        <action
+            android:id="@+id/navigateFromAddShiftToExtraFragment"
+            app:destination="@id/extraAdditionFragment"
+            app:enterAnim="@anim/from_down"
+            app:exitAnim="@anim/to_up"
+            app:popEnterAnim="@anim/from_left_side"
+            app:popExitAnim="@anim/to_left_side" />
+    </fragment>
+    <fragment
+        android:id="@+id/allSalariesFragment"
+        android:name="dk.simonsejse.loenberegning.fragments.AllSalariesFragment"
+        android:label="fragment_all_salaries"
+        tools:layout="@layout/fragment_all_salaries" >
+        <action
+            android:id="@+id/navigateFromAllSalariesToEditShift"
+            app:destination="@id/editShiftFragment"
+            app:enterAnim="@anim/from_left_side"
+            app:exitAnim="@anim/to_left_side"
+            app:popEnterAnim="@anim/from_right_side"
+            app:popExitAnim="@anim/to_right_side" />
+    </fragment>
+    <fragment
+        android:id="@+id/editShiftFragment"
+        android:name="dk.simonsejse.loenberegning.fragments.EditShiftFragment"
+        android:label="fragment_edit_shift"
+        tools:layout="@layout/fragment_edit_shift" >
+        <action
+            android:id="@+id/navigateFromEditShiftToAllSalariesFragment"
+            app:destination="@id/allSalariesFragment"
+            app:enterAnim="@anim/from_up"
+            app:exitAnim="@anim/to_down"
+            app:popEnterAnim="@anim/from_down"
+            app:popExitAnim="@anim/to_up"
+            app:popUpTo="@id/allSalariesFragment" />
+        <action
+            android:id="@+id/navigateFromEditShiftToExtraFragment"
+            app:enterAnim="@anim/from_up"
+            app:exitAnim="@anim/to_down"
+            app:popEnterAnim="@anim/from_down"
+            app:popExitAnim="@anim/to_up"
+            app:destination="@id/extraAdditionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="dk.simonsejse.loenberegning.fragments.InfoFragment"
+        android:label="fragment_info"
+        tools:layout="@layout/fragment_info" />
+    <fragment
+        android:id="@+id/extraAdditionFragment"
+        android:name="dk.simonsejse.loenberegning.fragments.ExtraAdditionFragment"
+        android:label="fragment_extra_addition"
+        tools:layout="@layout/fragment_extra_addition" >
+        <action
+            android:id="@+id/navigateFromExtraAdditionToAddShiftFragment"
+            app:destination="@id/addShiftFragment"
+            app:enterAnim="@anim/from_up"
+            app:exitAnim="@anim/to_down"
+            app:popEnterAnim="@anim/from_down"
+            app:popExitAnim="@anim/to_up"
+            app:popUpTo="@id/addShiftFragment" />
+        <action
+            android:id="@+id/action_extraAdditionFragment_to_editShiftFragment2"
+            app:destination="@id/editShiftFragment"
+            app:enterAnim="@anim/from_up"
+            app:exitAnim="@anim/to_down"
+            app:popEnterAnim="@anim/from_down"
+            app:popExitAnim="@anim/to_up"
+            app:popUpTo="@id/editShiftFragment" />
+    </fragment>
+</navigation>

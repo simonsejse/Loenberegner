@@ -1,0 +1,12 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="gender_entries">
+        <item>Mand</item>
+        <item>Kvinde</item>
+    </string-array>
+
+    <string-array name="gender_values">
+        <item>Mand</item>
+        <item>Kvinde</item>
+    </string-array>
+</resources>

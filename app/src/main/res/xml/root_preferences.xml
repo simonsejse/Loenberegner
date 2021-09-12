@@ -1,0 +1,62 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/profile_category_preferences">
+
+        <EditTextPreference
+            app:key="@string/name_key"
+            app:title="@string/profile_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="reply"
+            app:entries="@array/gender_entries"
+            app:entryValues="@array/gender_values"
+            app:key="@string/gender_key"
+            app:title="@string/gender_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/fradrag_category_preferences">
+
+        <SwitchPreferenceCompat
+            app:key="@string/userToggleFradrag_key"
+            app:title="@string/fradragOnOrOff_title" />
+
+        <EditTextPreference
+            app:dependency="userHasFradrag"
+            android:inputType="number"
+            app:key="@string/fradrag_key"
+            app:useSimpleSummaryProvider="true"
+            app:title="@string/fradrag_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/løn_category_preferences">
+        <EditTextPreference
+            android:inputType="number"
+            android:defaultValue="120"
+            app:key="@string/hourlyRateAtWork_key"
+            app:useSimpleSummaryProvider="true"
+            app:title="@string/timeløn_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/skat_category_preferences">
+
+        <SwitchPreferenceCompat
+            app:key="@string/skatToggle_key"
+            app:title="@string/skatOnOrOff" />
+
+        <EditTextPreference
+            android:inputType="numberDecimal"
+            app:dependency="userHasSkat"
+            app:key="@string/skatInProcent_key"
+            app:title="@string/skat_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

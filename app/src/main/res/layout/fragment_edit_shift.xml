@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.EditShiftFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        >
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/date_picker_actions"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_margin="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/date_for_shift"
+            app:endIconMode="clear_text"
+            app:helperText="Dagen hvorpå du arbejdede"
+            app:startIconContentDescription="@string/content_description_date_end_icon"
+            app:startIconDrawable="@drawable/ic_baseline_edit_calendar_24"
+            app:startIconTint="@color/purple_200">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:longClickable="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/work_start_time_picker"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_margin="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/work_start_text"
+            app:endIconMode="clear_text"
+            app:helperText="Tidspunktet til vagten startede"
+
+            app:startIconContentDescription="@string/content_description_date_end_icon"
+            app:startIconDrawable="@drawable/ic_baseline_timer_24"
+            app:startIconTint="@color/purple_200">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:longClickable="false"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/work_end_time_picker"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_margin="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/work_end_text"
+            app:endIconMode="clear_text"
+            app:helperText="Tidspunktet til vagten sluttede"
+            app:startIconContentDescription="@string/content_description_date_end_icon"
+            app:startIconDrawable="@drawable/ic_baseline_timer_24"
+            app:startIconTint="@color/purple_200">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:longClickable="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/changeShiftButton"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_shift_button"
+            app:icon="@drawable/ic_baseline_add_task_24" />
+
+        <Button
+            android:id="@+id/deleteShiftButton"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/logoColor"
+            android:text="@string/delete_shift_text"
+            app:icon="@drawable/ic_baseline_delete_24" />
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

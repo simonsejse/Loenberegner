@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.HomeFragment">
+
+
+    <TextView
+        android:id="@+id/logoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:fontFamily="serif"
+        android:text="@string/logo_text"
+        android:textColor="@color/logoColor"
+        android:textSize="100sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_conversion_absoluteHeight="731dp"
+        tools:layout_conversion_absoluteWidth="411dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="42dp"
+        android:layout_height="64dp"
+        android:src="@drawable/ic_baseline_add_box_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/logoTextView"
+        app:layout_constraintTop_toTopOf="@+id/logoTextView"
+        android:contentDescription="@string/logo_content_description" />
+
+    <Button
+        android:id="@+id/addShiftButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/add_shift_text"
+        app:icon="@drawable/ic_baseline_add_box_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoTextView"
+        app:shapeAppearance="?attr/shapeAppearanceSmallComponent" />
+
+    <Button
+        android:id="@+id/infoButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="@string/info_about_app"
+        app:icon="@drawable/ic_baseline_info_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addShiftButton"
+        app:shapeAppearance="?attr/shapeAppearanceSmallComponent" />
+
+    <Button
+        android:id="@+id/salaryHistoryButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="@string/history_button_text"
+        app:icon="@drawable/icons8_activity_history_25"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infoButton"
+        app:shapeAppearance="?attr/shapeAppearanceSmallComponent" />
+
+    <Button
+        android:id="@+id/settingsButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_text"
+        app:icon="@drawable/ic_baseline_settings_24"
+        app:layout_constraintBottom_toTopOf="@+id/containedButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:shapeAppearance="?attr/shapeAppearanceSmallComponent" />
+
+    <Button
+        android:id="@+id/containedButton"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="@string/calculate_hours_text"
+        app:icon="@drawable/calculate"
+        app:layout_constraintBottom_toTopOf="@+id/calculateWithHoursButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:shapeAppearance="?attr/shapeAppearanceSmallComponent" />
+
+    <Button
+        android:id="@+id/calculateWithHoursButton"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="@string/calculate_hours_text_2"
+        app:icon="@drawable/calculate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="20dp"
+        app:shapeAppearance="?attr/shapeAppearanceSmallComponent" />
+
+    <TextView
+        android:id="@+id/credits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/concert_one"
+        android:text="@string/credits_text"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

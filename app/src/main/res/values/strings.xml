@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">loenberegning</string>
+
+    <!-- TODO: Overall text -->
+    <string name="logo_text">Løn</string>
+    <string name="history_button_text">Historik</string>
+
+
+    <!-- Preference Titles and Messages -->
+    <string name="profile_category_preferences">Profil</string>
+    <string name="profile_title">Navn</string>
+    <string name="gender_title">Køn</string>
+    <string name="fradragOnOrOff_title">Fradrag</string>
+    <string name="fradrag_category_preferences">Fradrag</string>
+    <string name="fradrag_title">Fradrag pr. måned</string>
+    <string name="løn_category_preferences">Løn</string>
+    <string name="timeløn_title">Din timeløn</string>
+    <string name="skat_category_preferences">Skat</string>
+    <string name="skatOnOrOff">Skal skat trækkes med?</string>
+    <string name="skat_title">Skat i procent %</string>
+    <string name="add_shift_text">Tilføj Vagt</string>
+    <string name="settings_text">Indstillinger</string>
+    <string name="calculate_hours_text">Beregn løn u/timer</string>
+    <string name="calculate_hours_text_2">Beregn løn m/timer</string>
+    <string name="credits_text">Programmeret af Simon Winther</string>
+    <string name="logo_content_description">A plus for the logo</string>
+
+    <!-- Preference Keys -->
+    <string name="hourlyRateAtWork_key">hourlyrate</string>
+    <string name="fradrag_key">fradrag</string>
+    <string name="userToggleFradrag_key">userHasFradrag</string>
+    <string name="gender_key">gender</string>
+    <string name="name_key">name</string>
+    <string name="skatToggle_key">userHasSkat</string>
+    <string name="skatInProcent_key">skatInProcent</string>
+
+    <!-- Calc_with_hours fragment -->
+    <string name="how_many_hours_hint">Hvor mange timer har du arbejdet?</string>
+    <string name="calculate_hours">Beregn løn</string>
+    <string name="andre_oplysninger_textview">Andre oplysninger:</string>
+    <string name="your_salary_text_intro">Din timeløn:</string>
+    <string name="notAnnouncedErrorMessage">N/A</string>
+    <string name="your_skat_in_procent_text_intro">Din skat i procent %:</string>
+    <string name="fradrag_text_intro">Dit fradrag (i kr):</string>
+
+    <string name="success_calculate_salary_text_1">Din løn beregnes til:</string>
+    <string name="moneySymbol">,-</string>
+    <string name="skatInProcentSymbol">%</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="content_description_date_end_icon">Beskriver dato</string>
+    <string name="date_for_shift">Dato</string>
+    <string name="add_shift_button_text">Tilføj vagten</string>
+    <string name="cancel_text">Afbryd</string>
+    <string name="work_start_text">Vagt start</string>
+    <string name="work_end_text">Vagt slut</string>
+    <string name="item_row_title_example">20-08-2021</string>
+    <string name="item_row_subtitle_example">8 timer og 5 minutter</string>
+    <string name="item_row_work_hours_example">15:00 » 18:00</string>
+    <string name="item_row_calculated_salary_example">1050,-</string>
+    <string name="info_about_app">Info</string>
+    <string name="githubAction">Github</string>
+    <string name="mailAction">Mail</string>
+    <string name="edit_shift_button">Accepter ændringer?</string>
+    <string name="delete_shift_text">Slet vagten</string>
+    <string name="extra_addition">Tillæg</string>
+    <string name="content_description_media">Gradient color to make it pretty</string>
+    <string name="extra_addition_end">Tillæg slut</string>
+    <string name="extra_addition_start">Tillæg start</string>
+
+</resources>

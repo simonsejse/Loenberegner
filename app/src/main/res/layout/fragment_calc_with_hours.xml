@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.CalcWithHoursFragment">
+
+    <TextView
+        android:id="@+id/logoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fontFamily="serif"
+        android:text="@string/logo_text"
+        android:textColor="@color/logoColor"
+        android:textSize="100sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_conversion_absoluteHeight="731dp"
+        tools:layout_conversion_absoluteWidth="411dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="42dp"
+        android:layout_height="64dp"
+        android:contentDescription="@string/logo_content_description"
+        android:src="@drawable/ic_baseline_add_box_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/logoTextView"
+        app:layout_constraintTop_toTopOf="@+id/logoTextView" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/amountOfHoursTextInputField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="25dp"
+        android:hint="@string/how_many_hours_hint"
+        app:endIconMode="clear_text"
+        app:helperText="Skriv antal timer indenfor tidsperioden d. 15-15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logoTextView"
+        app:startIconDrawable="@drawable/icons8_when_quest_30"
+        app:startIconTint="@color/purple_200">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/calculateMoneyButton"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:text="@string/calculate_hours"
+        app:icon="@drawable/ic_baseline_attach_money_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:shapeAppearance="?attr/shapeAppearanceSmallComponent" />
+
+    <TextView
+        android:id="@+id/oplysning_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/alfa_slab_one"
+        android:text="@string/andre_oplysninger_textview"
+        android:textColor="@color/purple_200"
+        app:layout_constraintStart_toStartOf="@+id/amountOfHoursTextInputField"
+        app:layout_constraintTop_toBottomOf="@+id/amountOfHoursTextInputField" />
+
+    <LinearLayout
+        android:id="@+id/linear_layout_oplysning_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/oplysning_header">
+
+        <TextView
+            android:id="@+id/salary_text_view_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/aldrich"
+            android:text="@string/your_salary_text_intro" />
+
+        <TextView
+            android:id="@+id/salary_text_view_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:fontFamily="@font/aldrich"
+            android:text="@string/notAnnouncedErrorMessage"
+            android:textColor="@color/purple_200" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_layout_oplysning_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout_oplysning_1">
+
+        <TextView
+            android:id="@+id/skat_text_view_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/aldrich"
+            android:text="@string/your_skat_in_procent_text_intro" />
+
+        <TextView
+            android:id="@+id/skat_text_view_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:fontFamily="@font/aldrich"
+            android:text="@string/notAnnouncedErrorMessage"
+            android:textColor="@color/purple_200" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_layout_oplysning_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout_oplysning_2">
+
+        <TextView
+            android:id="@+id/fradrag_text_view_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/aldrich"
+            android:text="@string/fradrag_text_intro" />
+
+        <TextView
+            android:id="@+id/fradrag_text_view_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:fontFamily="@font/aldrich"
+            android:text="@string/notAnnouncedErrorMessage"
+            android:textColor="@color/purple_200" />
+    </LinearLayout>
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progress_circular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/linear_layout_oplysning_3"
+        app:layout_constraintBottom_toTopOf="@+id/calculateMoneyButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintStart_toStartOf="@+id/linear_layout_oplysning_3"
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout_oplysning_3"
+        app:layout_constraintBottom_toTopOf="@+id/calculateMoneyButton"
+        >
+
+
+        <TextView
+            android:id="@+id/successCalculateSalaryTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/aldrich"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/successCalculateSalaryTextView2"
+            android:textSize="14sp"
+            android:textColor="@color/purple_200"
+            android:fontFamily="@font/faster_one"
+            android:layout_weight="2.7"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
