@@ -17,9 +17,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.Duration;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.TimeZone;
 
 import dk.simonsejse.loenberegning.R;
 import dk.simonsejse.loenberegning.database.Shift;
@@ -50,9 +49,9 @@ public class MyChildRecyclerViewAdapter extends RecyclerView.Adapter<MyChildRecy
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         final Shift shift = shiftList.get(position);
 
-        holder.cardDate.setText(shift.getWorkDate().atStartOfDay(TimeZone.getDefault().toZoneId()).format(DateUtil.DATES));
-        final LocalTime shiftStartAt = shift.getShiftStartAt();
-        final LocalTime shiftEndsAt = shift.getShiftEndsAt();
+        holder.cardDate.setText(shift.getShiftStartAt().format(DateUtil.DATE_FORMAT_WITH_DASH));
+        final LocalDateTime shiftStartAt = shift.getShiftStartAt();
+        final LocalDateTime shiftEndsAt = shift.getShiftEndsAt();
 
         final Duration between = Duration.between(shiftStartAt, shiftEndsAt);
 
@@ -61,15 +60,15 @@ public class MyChildRecyclerViewAdapter extends RecyclerView.Adapter<MyChildRecy
         int salaryPerShift = (int) (between.toHours() * hourlyRate) + hourlyRate * ((shiftEndsAt.getMinute() - shiftStartAt.getMinute())/60);
 
         holder.salaryPerShift.setText(String.format("%d", salaryPerShift));
-        holder.workFromTo.setText(String.format("%s » %s", shiftStartAt.toString(), shiftEndsAt.toString()));
+        holder.workStart.setText(String.format("%s", shiftStartAt.format(DateUtil.DATE_TIME_FORMATTER)));
+        holder.workEnd.setText(String.format("%s", shiftEndsAt.format(DateUtil.DATE_TIME_FORMATTER)));
         holder.hoursWorked.setText(String.format("%s timer og %s minutter", between.toHours(), Math.abs(shiftEndsAt.getMinute() - shiftStartAt.getMinute())));
         holder.imageView.setImageResource(ImageViewResourcesForAdapter.ICONS_RESOURCES[Math.toIntExact(between.toHours())]);
-
+        holder.id.setText(String.valueOf(shift.getId()));
         holder.constraintLayout.setOnClickListener((view) -> {
             //TODO: fix when navigating to edit shift we have to use bundle
             final NavController navController = Navigation.findNavController(view);
             final Bundle bundle = new Bundle();
-            bundle.putSerializable(EnumDateVarchar.WORK.getText(), shift.getWorkDate());
             bundle.putSerializable(EnumDateVarchar.WORK_START.getText(), shift.getShiftStartAt());
             bundle.putSerializable(EnumDateVarchar.WORK_END.getText(), shift.getShiftEndsAt());
             navController.navigate(R.id.navigateFromAllSalariesToEditShift, bundle);
@@ -83,7 +82,7 @@ public class MyChildRecyclerViewAdapter extends RecyclerView.Adapter<MyChildRecy
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView cardDate, hoursWorked, salaryPerShift, workFromTo;
+        private TextView cardDate, hoursWorked, salaryPerShift, workStart, workEnd, id;
         private ImageView imageView;
 
         private ConstraintLayout constraintLayout;
@@ -94,7 +93,9 @@ public class MyChildRecyclerViewAdapter extends RecyclerView.Adapter<MyChildRecy
             this.hoursWorked = itemView.findViewById(R.id.hours_worked);
             this.imageView = itemView.findViewById(R.id.clock_logo);
             this.salaryPerShift = itemView.findViewById(R.id.salary_per_shift_textview);
-            this.workFromTo = itemView.findViewById(R.id.worked_from_to);
+            this.workStart = itemView.findViewById(R.id.worked_start);
+            this.workEnd = itemView.findViewById(R.id.worked_end);
+            this.id = itemView.findViewById(R.id.id_tw);
             this.constraintLayout = itemView.findViewById(R.id.layout);
         }
     }

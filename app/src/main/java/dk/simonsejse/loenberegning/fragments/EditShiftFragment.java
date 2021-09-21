@@ -1,49 +1,25 @@
 package dk.simonsejse.loenberegning.fragments;
 
-import android.icu.text.RelativeDateTimeFormatter;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDeepLinkRequest;
-import androidx.navigation.NavOptions;
-import androidx.navigation.Navigation;
-import androidx.preference.EditTextPreference;
 import androidx.room.Room;
-import androidx.room.RoomDatabase;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.time.temporal.Temporal;
-import java.util.Date;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import dk.simonsejse.loenberegning.R;
 import dk.simonsejse.loenberegning.database.AppDatabase;
-import dk.simonsejse.loenberegning.database.Shift;
 import dk.simonsejse.loenberegning.databinding.FragmentEditShiftBinding;
-import dk.simonsejse.loenberegning.models.EnumDateVarchar;
-import dk.simonsejse.loenberegning.models.IOnEditShiftListener;
-import dk.simonsejse.loenberegning.utilities.AlertUtil;
-import dk.simonsejse.loenberegning.utilities.DateUtil;
 
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -56,8 +32,10 @@ public class EditShiftFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         this.fragmentEditShiftBinding = FragmentEditShiftBinding.inflate(inflater, container, false);
         final FragmentActivity activity = getActivity();
+        /*
 
         if (activity != null){
             this.navController = Navigation.findNavController(activity, R.id.navHostControllerFragment);
@@ -77,12 +55,10 @@ public class EditShiftFragment extends Fragment {
                     workEnd = (LocalTime) arguments.getSerializable(EnumDateVarchar.WORK_END.getText());
 
                     //Settings TextViews
-                    final EditText datePickerActionsEditText = this.fragmentEditShiftBinding.datePickerActions.getEditText();
                     final EditText startTimePickerEditText = this.fragmentEditShiftBinding.workStartTimePicker.getEditText();
                     final EditText workEndTimePickerEditText = this.fragmentEditShiftBinding.workEndTimePicker.getEditText();
 
-                    if (datePickerActionsEditText != null && startTimePickerEditText != null && workEndTimePickerEditText != null){
-                        datePickerActionsEditText.setText(oldWorkDate.format(DateUtil.DATES));
+                    if (startTimePickerEditText != null && workEndTimePickerEditText != null){
                         startTimePickerEditText.setText(workStart.toString());
                         workEndTimePickerEditText.setText(workEnd.toString());
 
@@ -97,12 +73,12 @@ public class EditShiftFragment extends Fragment {
 
                         this.fragmentEditShiftBinding.changeShiftButton.setOnClickListener((view) -> {
                             final LocalDate newWorkDate;
-                            final LocalTime newWorkStart;
-                            final LocalTime newWorkEnd;
+                            final LocalDateTime newWorkStart;
+                            final LocalDateTime newWorkEnd;
                             try {
                                 newWorkDate = LocalDate.parse(datePickerActionsEditText.getText().toString(), DateUtil.DATES);
-                                newWorkStart = LocalTime.parse(startTimePickerEditText.getText().toString(), DateUtil.TIME);
-                                newWorkEnd = LocalTime.parse(workEndTimePickerEditText.getText().toString(), DateUtil.TIME);
+                                newWorkStart = LocalDateTime.parse(startTimePickerEditText.getText().toString());
+                                newWorkEnd = LocalDateTime.parse(workEndTimePickerEditText.getText().toString());
 
                                 if (updateShift(oldWorkDate, newWorkDate, newWorkStart, newWorkEnd))
                                     AlertUtil.send(viewById, "Vagten er blevet opdateret successfuldt!", BaseTransientBottomBar.LENGTH_LONG);
@@ -126,15 +102,18 @@ public class EditShiftFragment extends Fragment {
                 }
             }
         } else navController.popBackStack();
+
+         */
         return fragmentEditShiftBinding.getRoot();
     }
 
 
-    protected boolean updateShift(LocalDate oldDate, LocalDate newWorkDate, LocalTime newWorkStart, LocalTime workStart){
+    protected boolean updateShift(LocalDateTime oldStart, LocalDateTime newWorkStart, LocalDateTime workStart){
         CompletableFuture<Boolean> updatedSuccessFully = CompletableFuture.supplyAsync(() -> {
             AppDatabase db = Room.databaseBuilder(getContext(), AppDatabase.class, "shift").build();
-            if (!db.shiftDao().doesShiftExist(oldDate)) return false;
-            return db.shiftDao().updateShift(oldDate, newWorkDate, newWorkStart, workStart) > 0;
+            if (!db.shiftDao().doesShiftExist(oldStart)) return false;
+            //TODO: find id instead of just inputting 2
+            return db.shiftDao().updateShift( 2, newWorkStart, workStart) > 0;
         });
         try {
             return updatedSuccessFully.get();
@@ -146,12 +125,12 @@ public class EditShiftFragment extends Fragment {
         return false;
     }
 
-    protected boolean deleteShift(LocalDate workDate){
+    protected boolean deleteShift(LocalDateTime dateTime, long id){
         CompletableFuture<Boolean> deletedSuccessFully = CompletableFuture.supplyAsync(() -> {
             AppDatabase appDatabase = Room.databaseBuilder(getContext(), AppDatabase.class, "shift").build();
-            if (!appDatabase.shiftDao().doesShiftExist(workDate)) return false;
+            if (!appDatabase.shiftDao().doesShiftExist(dateTime)) return false;
 
-            final int amountOfRowsAffected = appDatabase.shiftDao().deleteShift(workDate);
+            final int amountOfRowsAffected = appDatabase.shiftDao().deleteShift(id);
             return amountOfRowsAffected > 0;
         });
         try {

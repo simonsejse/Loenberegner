@@ -1,13 +1,14 @@
 package dk.simonsejse.loenberegning.models;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Extra {
-    public LocalTime start;
-    public LocalTime end;
+    public LocalDateTime start;
+    public LocalDateTime end;
     public Integer integer;
 
-    public Extra(LocalTime start, LocalTime end, Integer integer) {
+    public Extra(LocalDateTime start, LocalDateTime end, Integer integer) {
         this.start = start;
         this.end = end;
         this.integer = integer;

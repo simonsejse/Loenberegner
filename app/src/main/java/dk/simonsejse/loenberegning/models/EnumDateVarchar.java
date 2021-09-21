@@ -2,8 +2,7 @@ package dk.simonsejse.loenberegning.models;
 
 public enum EnumDateVarchar {
     WORK_START("workStart"),
-    WORK_END("workEnd"),
-    WORK("work");
+    WORK_END("workEnd");
 
     private final String text;
 

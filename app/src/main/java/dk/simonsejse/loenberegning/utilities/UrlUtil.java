@@ -1,4 +1,4 @@
-package dk.simonsejse.loenberegning.fragments;
+package dk.simonsejse.loenberegning.utilities;
 
 public class UrlUtil {
     public static final String MAIL_ADDRESS = "https://mail.google.com/mail/u/0/?fs=1&to=simonwa01@gmail.com&su=Vedr.%20din%20l%C3%B8nberegner%20app&tf=cm";

@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,8 +22,7 @@ import dk.simonsejse.loenberegning.models.Extra;
 @Entity(tableName = "shift")
 public class Shift implements Serializable {
 
-    public Shift(LocalDate date, LocalTime shiftStartAt, LocalTime shiftEndsAt){
-        this.workDate = date;
+    public Shift(LocalDateTime shiftStartAt, LocalDateTime shiftEndsAt){
         this.shiftStartAt = shiftStartAt;
         this.shiftEndsAt = shiftEndsAt;
         this.extras = new ArrayList<>();
@@ -32,20 +32,21 @@ public class Shift implements Serializable {
     public Shift(){
     }
 
-    @PrimaryKey
-    private LocalDate workDate;
+    @PrimaryKey(autoGenerate = true)
+    private long id;
+
     @ColumnInfo(name = "shift_start")
-    private LocalTime shiftStartAt;
+    private LocalDateTime shiftStartAt;
 
     @ColumnInfo(name = "shift_end")
-    private LocalTime shiftEndsAt;
+    private LocalDateTime shiftEndsAt;
 
     @ColumnInfo(name="extra_salary")
     private List<Extra> extras;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean addExtras(Extra extra){
-        if (shiftStartAt.isBefore(extra.start.plusSeconds(1)) && shiftEndsAt.isAfter(extra.end.minusSeconds(1))) return extras.add(extra);
+        if (extra.start.isAfter(shiftStartAt) && extra.end.isBefore(shiftEndsAt.minusSeconds(1))) return extras.add(extra);
         return false;
     }
 
@@ -57,27 +58,28 @@ public class Shift implements Serializable {
         return extras;
     }
 
-    public LocalDate getWorkDate() {
-        return workDate;
+
+    public long getId() {
+        return id;
     }
 
-    public void setWorkDate(LocalDate workDate) {
-        this.workDate = workDate;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public LocalTime getShiftStartAt() {
+    public LocalDateTime getShiftStartAt() {
         return shiftStartAt;
     }
 
-    public void setShiftStartAt(LocalTime shiftStartAt) {
+    public void setShiftStartAt(LocalDateTime shiftStartAt) {
         this.shiftStartAt = shiftStartAt;
     }
 
-    public LocalTime getShiftEndsAt() {
+    public LocalDateTime getShiftEndsAt() {
         return shiftEndsAt;
     }
 
-    public void setShiftEndsAt(LocalTime shiftEndsAt) {
+    public void setShiftEndsAt(LocalDateTime shiftEndsAt) {
         this.shiftEndsAt = shiftEndsAt;
     }
 }

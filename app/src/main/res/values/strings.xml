@@ -67,5 +67,6 @@
     <string name="content_description_media">Gradient color to make it pretty</string>
     <string name="extra_addition_end">Tillæg slut</string>
     <string name="extra_addition_start">Tillæg start</string>
+    <string name="extra_addition_in_crows">Tillæg i DKK</string>
 
 </resources>

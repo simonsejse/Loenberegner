@@ -38,7 +38,7 @@ public class MyRecyclerViewAdapterForExtraAddition extends RecyclerView.Adapter<
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         final Extra extra = extraList.get(position);
 
-        holder.extraAdditionTime.setText(String.format("%s-%s", extra.start.format(DateUtil.TIME), extra.end.format(DateUtil.TIME)));
+        holder.extraAdditionTime.setText(String.format("%s-%s", extra.start.format(DateUtil.TIME_FORMAT), extra.end.format(DateUtil.TIME_FORMAT)));
         holder.extraAddition.setText(String.valueOf(extra.integer));
     }
 

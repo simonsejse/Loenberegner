@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import dk.simonsejse.loenberegning.databinding.FragmentInfoBinding;
 import dk.simonsejse.loenberegning.utilities.DateUtil;
-import dk.simonsejse.loenberegning.fragments.UrlUtil;
+import dk.simonsejse.loenberegning.utilities.UrlUtil;
 
 public class InfoFragment extends Fragment {
 

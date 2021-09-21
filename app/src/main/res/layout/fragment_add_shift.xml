@@ -51,27 +51,6 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:hint="@string/date_for_shift"
-                app:endIconMode="clear_text"
-                app:helperText="Dagen hvorpå du arbejdede"
-                app:startIconContentDescription="@string/content_description_date_end_icon"
-                app:startIconDrawable="@drawable/ic_baseline_edit_calendar_24"
-                app:startIconTint="@color/purple_200">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/date_picker_actions"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="false"
-                    android:focusable="false"
-                    android:longClickable="false" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -84,13 +63,12 @@
                 app:startIconTint="@color/purple_200">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/work_start_time_picker"
+                    android:id="@+id/work_start_tw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="false"
                     android:focusable="false"
                     android:longClickable="false"
-
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,7 +84,7 @@
                 app:startIconTint="@color/purple_200">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/work_end_time_picker"
+                    android:id="@+id/work_end_tw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="false"

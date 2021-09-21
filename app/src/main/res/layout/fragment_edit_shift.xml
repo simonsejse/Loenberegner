@@ -14,27 +14,6 @@
         >
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/date_picker_actions"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_margin="25dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/date_for_shift"
-            app:endIconMode="clear_text"
-            app:helperText="Dagen hvorpå du arbejdede"
-            app:startIconContentDescription="@string/content_description_date_end_icon"
-            app:startIconDrawable="@drawable/ic_baseline_edit_calendar_24"
-            app:startIconTint="@color/purple_200">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="false"
-                android:focusable="false"
-                android:longClickable="false" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/work_start_time_picker"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_margin="25dp"

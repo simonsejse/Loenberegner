@@ -23,12 +23,12 @@ public interface ShiftDataAccessObject {
     @Insert
     void insertShift(Shift shift);
 
-    @Query("SELECT EXISTS(SELECT * FROM shift WHERE workDate = :workDate)")
-    boolean doesShiftExist(LocalDate workDate);
+    @Query("SELECT EXISTS(SELECT * FROM shift WHERE shift_start = :shift_start)")
+    boolean doesShiftExist(LocalDateTime shift_start);
 
-    @Query("DELETE FROM shift WHERE workDate = :workDate")
-    int deleteShift(LocalDate workDate);
+    @Query("DELETE FROM shift WHERE id = :id")
+    int deleteShift(long id);
 
-    @Query("UPDATE shift SET workDate=:newLocalDate, shift_start=:shiftStart, shift_end=:shiftEnd WHERE workDate=:oldLocalDate")
-    int updateShift(LocalDate oldLocalDate, LocalDate newLocalDate, LocalTime shiftStart, LocalTime shiftEnd);
+    @Query("UPDATE shift SET shift_start=:shiftStart, shift_end=:shiftEnd WHERE id=:id")
+    int updateShift(long id, LocalDateTime shiftStart, LocalDateTime shiftEnd);
 }

@@ -22,61 +22,50 @@
         android:layout_marginEnd="25dp"
         android:layout_marginRight="25dp">
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:helperText="Tidspunktet til hvor tillæget skal startes"
-                app:startIconContentDescription="@string/content_description_date_end_icon"
-                app:startIconDrawable="@drawable/ic_baseline_edit_calendar_24"
-                app:startIconTint="@color/purple_200"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp">
-
-                <AutoCompleteTextView
-                    android:id="@+id/autoCompleteTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:inputType="none"
-                    android:text="@string/extra_addition_start" />
-            </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                app:helperText="Tidspunktet til hvor tillæget skal startes"
+                android:hint="@string/extra_addition_start"
+                app:helperText="Tidspunktet til hvor tillæget skal startes (i timer)"
                 app:startIconContentDescription="@string/content_description_date_end_icon"
                 app:startIconDrawable="@drawable/ic_baseline_edit_calendar_24"
                 app:startIconTint="@color/purple_200">
 
                 <AutoCompleteTextView
-                    android:id="@+id/autoCompleteTextView2"
+                    android:id="@+id/addition_start_tw"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="@string/extra_addition_start" />
+                    android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
-        </LinearLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:helperText="Tidspunktet til hvor tillæget skal stoppes (i timer)"
+                app:startIconContentDescription="@string/content_description_date_end_icon"
+                app:startIconDrawable="@drawable/ic_baseline_edit_calendar_24"
+                app:startIconTint="@color/purple_200"
+                android:hint="@string/extra_addition_end">
+
+                <AutoCompleteTextView
+                    android:id="@+id/addition_end_tw"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="2"
+            android:layout_marginTop="5dp"
             android:baselineAligned="false">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -84,9 +73,9 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/extra_addition_start"
+                android:hint="@string/extra_addition_in_crows"
                 app:endIconMode="clear_text"
-                app:helperText="Tidspunktet til hvor tillæget skal startes"
+                app:helperText="Tillæg (i kroner)"
                 app:startIconContentDescription="@string/content_description_date_end_icon"
                 app:startIconDrawable="@drawable/ic_baseline_edit_calendar_24"
                 app:startIconTint="@color/purple_200"
@@ -94,6 +83,7 @@
                 android:layout_marginRight="5dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/addition_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"/>
@@ -105,6 +95,7 @@
             android:id="@+id/addExtraAdditionBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
             android:text="Tilføj tillæg" />
 
 

@@ -46,7 +46,7 @@ public class AllSalariesFragment extends Fragment {
         final CompletableFuture<List<Section>> completableFuture = CompletableFuture.supplyAsync(() -> {
             AppDatabase db = Room.databaseBuilder(getContext(), AppDatabase.class, "shift").build();
             return db.shiftDao().getAllShifts().stream()
-                    .collect(Collectors.groupingBy(shift -> shift.getWorkDate().getMonth()))
+                    .collect(Collectors.groupingBy(shift -> shift.getShiftStartAt().getMonth()))
                     .entrySet()
                     .stream()
                     .sorted((m1, m2) -> m1.getKey().compareTo(m2.getKey()))
