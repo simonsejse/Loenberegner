@@ -1,24 +1,44 @@
 package dk.simonsejse.loenberegning.database;
 
+import android.annotation.SuppressLint;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.room.TypeConverter;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
-import java.lang.reflect.Type;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import dk.simonsejse.loenberegning.models.Extra;
+import dk.simonsejse.loenberegning.serializers.ExtraCustomDeserializer;
+import dk.simonsejse.loenberegning.serializers.ExtraCustomSerializer;
+import dk.simonsejse.loenberegning.utilities.DateUtil;
 
 public class ExtraConverter {
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @TypeConverter
     public List<Extra> toExtraList(String extraListGson){
         if (extraListGson == null){
             return null;
         }
-        Gson gson = new Gson();
-        final Type type = new TypeToken<List<Extra>>() {}.getType();
-        return gson.fromJson(extraListGson, type);
+        final ObjectMapper objectMapper = new ObjectMapper();
+        SimpleModule simpleModule = new SimpleModule("", new Version(1, 0, 0, null, null, null));
+        simpleModule.addDeserializer(Extra.class, new ExtraCustomDeserializer());
+        objectMapper.registerModule(simpleModule);
+
+        try {
+            return objectMapper.readValue(extraListGson, new TypeReference<List<Extra>>(){});
+        } catch (IOException e) {
+            return new ArrayList<Extra>();
+        }
     }
 
     @TypeConverter
@@ -26,8 +46,16 @@ public class ExtraConverter {
         if (extras == null){
             return null;
         }
-        Gson gson = new Gson();
-        Type type = new TypeToken<List<Extra>>(){}.getType();
-        return gson.toJson(extras, type);
+        final ObjectMapper objectMapper = new ObjectMapper();
+        SimpleModule simpleModule = new SimpleModule("ExtraCustomSerializer", new Version(1, 0, 0, null, null, null));
+        simpleModule.addSerializer(Extra.class, new ExtraCustomSerializer());
+        objectMapper.registerModule(simpleModule);
+        try {
+            return objectMapper.writeValueAsString(extras);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
+
 }

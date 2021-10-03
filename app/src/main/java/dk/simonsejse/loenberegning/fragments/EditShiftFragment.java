@@ -10,7 +10,6 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
-import androidx.room.Room;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -18,7 +17,7 @@ import java.time.LocalDateTime;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import dk.simonsejse.loenberegning.database.AppDatabase;
+import dk.simonsejse.loenberegning.ShiftApplication;
 import dk.simonsejse.loenberegning.databinding.FragmentEditShiftBinding;
 
 
@@ -110,10 +109,9 @@ public class EditShiftFragment extends Fragment {
 
     protected boolean updateShift(LocalDateTime oldStart, LocalDateTime newWorkStart, LocalDateTime workStart){
         CompletableFuture<Boolean> updatedSuccessFully = CompletableFuture.supplyAsync(() -> {
-            AppDatabase db = Room.databaseBuilder(getContext(), AppDatabase.class, "shift").build();
-            if (!db.shiftDao().doesShiftExist(oldStart)) return false;
+            if (!ShiftApplication.database.shiftDao().doesShiftExist(oldStart)) return false;
             //TODO: find id instead of just inputting 2
-            return db.shiftDao().updateShift( 2, newWorkStart, workStart) > 0;
+            return ShiftApplication.database.shiftDao().updateShift( 2, newWorkStart, workStart) > 0;
         });
         try {
             return updatedSuccessFully.get();
@@ -127,10 +125,9 @@ public class EditShiftFragment extends Fragment {
 
     protected boolean deleteShift(LocalDateTime dateTime, long id){
         CompletableFuture<Boolean> deletedSuccessFully = CompletableFuture.supplyAsync(() -> {
-            AppDatabase appDatabase = Room.databaseBuilder(getContext(), AppDatabase.class, "shift").build();
-            if (!appDatabase.shiftDao().doesShiftExist(dateTime)) return false;
+            if (!ShiftApplication.database.shiftDao().doesShiftExist(dateTime)) return false;
 
-            final int amountOfRowsAffected = appDatabase.shiftDao().deleteShift(id);
+            final int amountOfRowsAffected = ShiftApplication.database.shiftDao().deleteShift(id);
             return amountOfRowsAffected > 0;
         });
         try {

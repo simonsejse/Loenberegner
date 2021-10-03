@@ -68,5 +68,8 @@
     <string name="extra_addition_end">Tillæg slut</string>
     <string name="extra_addition_start">Tillæg start</string>
     <string name="extra_addition_in_crows">Tillæg i DKK</string>
+    <string name="add_extra_addition_button">Tilføj tillægene</string>
+    <string name="ok_alert">OK</string>
+    <string name="wait_please_custom_dialog">Vent venligst, indlæser data...</string>
 
 </resources>

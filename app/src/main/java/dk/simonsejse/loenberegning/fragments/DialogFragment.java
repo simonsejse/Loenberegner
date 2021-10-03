@@ -15,6 +15,7 @@ import androidx.annotation.RequiresApi;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.TimeZone;
@@ -23,10 +24,12 @@ import dk.simonsejse.loenberegning.R;
 import dk.simonsejse.loenberegning.database.Shift;
 import dk.simonsejse.loenberegning.databinding.FullDialogFragmentForAddingAdditionBinding;
 import dk.simonsejse.loenberegning.exceptions.ExtraAdditionDateBeforeAfterShiftException;
+import dk.simonsejse.loenberegning.models.Extra;
 import dk.simonsejse.loenberegning.models.IResponseDataFromDialogFragment;
 import dk.simonsejse.loenberegning.models.ResponseDataFromDialogFragmentModel;
 import dk.simonsejse.loenberegning.utilities.AlertUtil;
 import dk.simonsejse.loenberegning.utilities.DateUtil;
+import dk.simonsejse.loenberegning.utilities.IconUtil;
 import dk.simonsejse.loenberegning.utilities.MessagesUtil;
 import dk.simonsejse.loenberegning.utilities.ParseUtil;
 
@@ -48,7 +51,6 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FullDialogFragmentForAddingAdditionBinding.inflate(inflater, container, false);
-
         return binding.getRoot();
     }
 
@@ -62,9 +64,9 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
         this.binding.additionStartTw.setOnClickListener((listener -> {
             DateUtil.openSelectableDatePicker(
                              this,
-                             new LocalDateTime[]{
-                                     shift.getShiftStartAt(),
-                                     shift.getShiftEndsAt()
+                             new LocalDate[]{
+                                     shift.getShiftStartAt().toLocalDate(),
+                                     shift.getShiftEndsAt().toLocalDate()
                              }, (positiveDate) -> {
                                  final String format = Instant.ofEpochMilli(positiveDate).atZone(TimeZone.getDefault().toZoneId()).format(DATE_FORMAT_WITH_SLASH);
                                  this.binding.additionStartTw.setText(format);
@@ -91,9 +93,9 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
         this.binding.additionEndTw.setOnClickListener((listener -> {
             DateUtil.openSelectableDatePicker(
                     this,
-                    new LocalDateTime[]{
-                            shift.getShiftStartAt(),
-                            shift.getShiftEndsAt()
+                    new LocalDate[]{
+                            shift.getShiftStartAt().toLocalDate(),
+                            shift.getShiftEndsAt().toLocalDate()
                     }, (positiveDate) -> {
                         final String format = Instant.ofEpochMilli(positiveDate).atZone(TimeZone.getDefault().toZoneId()).format(DATE_FORMAT_WITH_SLASH);
                         this.binding.additionEndTw.setText(format);
@@ -121,7 +123,6 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void addNewExtraAdditionToShift(View view) {
-        //Continue
         LocalDateTime extraStart;
         LocalDateTime extraEnd;
         try{
@@ -129,17 +130,17 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
             extraEnd = ParseUtil.parseToLocalDateTime(this.binding.additionEndTw.getText().toString());
             int amount = Integer.parseInt(this.binding.additionTextView.getText().toString().trim());
 
-            if (shift.getShiftStartAt().isBefore(extraStart.plusSeconds(1)) && shift.getShiftEndsAt().isAfter(extraEnd.minusSeconds(1))){
-                iResponseDataFromDialogFragment.callback(new ResponseDataFromDialogFragmentModel(
-                        extraStart, extraEnd, amount
-                ));
-            } else throw new ExtraAdditionDateBeforeAfterShiftException(MessagesUtil.EXTRA_ADDITION_HAS_TO_BE_BETWEEN_SHIFT);
+            this.shift.addExtras(new Extra(extraStart, extraEnd, amount));
+
+            iResponseDataFromDialogFragment.callback(new ResponseDataFromDialogFragmentModel(this.shift));
+
+            dismiss();
         }catch(DateTimeParseException dateTimeParseException){
-            AlertUtil.send(view, dateTimeParseException.getMessage(), BaseTransientBottomBar.LENGTH_LONG);
+            AlertUtil.send(view, "Dato fejl!", dateTimeParseException.getMessage(), IconUtil.ERROR);
         }catch(NumberFormatException e){
-            AlertUtil.send(view, MessagesUtil.NUMBER_FORMAT_EXCEPTION_ERROR_MESSAGE, BaseTransientBottomBar.LENGTH_LONG);
-        }catch(ExtraAdditionDateBeforeAfterShiftException e){
-            AlertUtil.send(view, e.getMessage(), BaseTransientBottomBar.LENGTH_LONG);
+            AlertUtil.send(view,"Tal fejl!", MessagesUtil.NUMBER_FORMAT_EXCEPTION_ERROR_MESSAGE, IconUtil.ERROR);
+        } catch (ExtraAdditionDateBeforeAfterShiftException e) {
+            AlertUtil.send(view, "Tillæg fejl", e.getMessage(), IconUtil.ERROR);
         }
         //dismiss(); won't let alertutil work fix that l8
     }

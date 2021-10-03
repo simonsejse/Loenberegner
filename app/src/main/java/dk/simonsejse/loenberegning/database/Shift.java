@@ -16,7 +16,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import dk.simonsejse.loenberegning.exceptions.ExtraAdditionDateBeforeAfterShiftException;
 import dk.simonsejse.loenberegning.models.Extra;
+import dk.simonsejse.loenberegning.models.ResponseDataFromDialogFragmentModel;
+import dk.simonsejse.loenberegning.utilities.MessagesUtil;
 
 
 @Entity(tableName = "shift")
@@ -45,9 +48,14 @@ public class Shift implements Serializable {
     private List<Extra> extras;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public boolean addExtras(Extra extra){
-        if (extra.start.isAfter(shiftStartAt) && extra.end.isBefore(shiftEndsAt.minusSeconds(1))) return extras.add(extra);
-        return false;
+    public void addExtras(Extra extra) throws ExtraAdditionDateBeforeAfterShiftException {
+        if (
+                extra.start.isAfter(shiftStartAt) &&
+                extra.start.isBefore(shiftEndsAt) &&
+                extra.end.isAfter(shiftStartAt) &&
+                extra.end.isBefore(shiftEndsAt)
+        ) extras.add(extra);
+        else throw new ExtraAdditionDateBeforeAfterShiftException(MessagesUtil.EXTRA_ADDITION_HAS_TO_BE_BETWEEN_SHIFT);
     }
 
     public void setExtras(List<Extra> extras) {
@@ -57,7 +65,6 @@ public class Shift implements Serializable {
     public List<Extra> getExtras() {
         return extras;
     }
-
 
     public long getId() {
         return id;

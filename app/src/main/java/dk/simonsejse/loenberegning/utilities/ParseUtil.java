@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
 import dk.simonsejse.loenberegning.database.Shift;
+import dk.simonsejse.loenberegning.exceptions.ExtraAdditionDateBeforeAfterShiftException;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ParseUtil {
@@ -22,13 +23,15 @@ public class ParseUtil {
      * @throws DateTimeParseException If Strings couldn't be parsed to dates
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static Shift parseToShift(String start, String end) throws DateTimeParseException{
+    public static Shift parseToShift(String start, String end) throws DateTimeParseException, ExtraAdditionDateBeforeAfterShiftException{
         try{
             final LocalDateTime startTime = LocalDateTime.parse(start, DATE_TIME_FORMATTER);
             final LocalDateTime endTime = LocalDateTime.parse(end, DATE_TIME_FORMATTER);
+            if (endTime.isBefore(startTime))
+                throw new ExtraAdditionDateBeforeAfterShiftException("Sluttidspunkt er før starttidspunkt?");
             return new Shift(startTime, endTime);
-        }catch(DateTimeParseException dateTimeParseException){
-            throw new DateTimeParseException(MessagesUtil.COULD_NOT_PARSE_DATES_TO_SHIFT,  "", 0);
+        }catch(DateTimeParseException e) {
+            throw new DateTimeParseException(MessagesUtil.COULD_NOT_PARSE_DATES_TO_SHIFT, "", 0);
         }
     }
 

@@ -17,6 +17,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -32,14 +33,14 @@ import dk.simonsejse.loenberegning.models.ITimePickerPositiveClickListenerCallba
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class DateUtil {
-    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM-yyyy HH:mm");
     public static final DateTimeFormatter DATE_FORMAT_WITH_DASH = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     public static final DateTimeFormatter DATE_FORMAT_WITH_SLASH = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     public static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
 
     protected enum DateEnumPicker{
+        START_DATE,
         END_DATE,
-        START_DATE
     }
 
     public static void openDatePicker(
@@ -65,7 +66,7 @@ public class DateUtil {
 
     public static void openSelectableDatePicker(
             Fragment fragment,
-            LocalDateTime[] dates,
+            LocalDate[] dates,
             MaterialPickerOnPositiveButtonClickListener<? super Long> onPositiveButtonClickListener,
             View.OnClickListener onNegativeButtonClickListener,
             DialogInterface.OnCancelListener onCancelListener
@@ -76,10 +77,10 @@ public class DateUtil {
         CalendarConstraints.Builder constraintsBuilderRange = new CalendarConstraints.Builder();
 
         CalendarConstraints.DateValidator dateValidatorMin = DateValidatorPointForward
-                .from(dates[DateEnumPicker.START_DATE.ordinal()].atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+                .from(dates[DateEnumPicker.START_DATE.ordinal()].atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli());
 
         CalendarConstraints.DateValidator dateValidatorMax = DateValidatorPointBackward
-                .before(dates[DateEnumPicker.END_DATE.ordinal()].atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+                .before(dates[DateEnumPicker.END_DATE.ordinal()].atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli());
 
         ArrayList<CalendarConstraints.DateValidator> listValidators = new ArrayList<CalendarConstraints.DateValidator>();
         listValidators.add(dateValidatorMin);

@@ -1,7 +1,9 @@
 package dk.simonsejse.loenberegning.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -45,6 +47,8 @@ public class HomeFragment extends Fragment {
     private void navigateToAddShiftsFragment(View v){
         this.navController.navigate(R.id.navigateFromHomeToAddShifts);
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void navigateToShiftHistoryFragment(View v){
         this.navController.navigate(R.id.navigateFromHomeToAllSalaries);
     }

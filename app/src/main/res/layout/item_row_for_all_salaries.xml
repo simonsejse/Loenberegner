@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
-
+        android:layout_marginBottom="1dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:checkable="true"
@@ -23,30 +23,27 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-
+            android:layout_height="match_parent">
 
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="@id/settings_btn"
                 app:layout_constraintEnd_toStartOf="@+id/settings_btn"
-                app:layout_constraintTop_toTopOf="@+id/settings_btn"
-                android:gravity="center_vertical">
+                app:layout_constraintTop_toTopOf="@+id/settings_btn">
 
                 <ImageView
                     android:id="@+id/id_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/icons8_identification_documents_24"
-                    app:tint="@color/purple_200"
-                    tools:ignore="VectorDrawableCompat"
                     android:layout_marginEnd="5dp"
                     android:layout_marginRight="5dp"
-                    />
+                    app:srcCompat="@drawable/icons8_identification_documents_24"
+                    app:tint="@color/purple_200"
+                    tools:ignore="VectorDrawableCompat" />
 
                 <TextView
                     android:id="@+id/id_title"
@@ -89,45 +86,43 @@
                 android:id="@+id/worked_start_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_baseline_access_time_24"
-                app:tint="@color/purple_200"
-                tools:ignore="VectorDrawableCompat"
-                app:layout_constraintTop_toBottomOf="@id/card_date"
                 app:layout_constraintBottom_toBottomOf="@+id/worked_end"
-                app:layout_constraintStart_toStartOf="@+id/card_date" />
+                app:layout_constraintStart_toStartOf="@+id/card_date"
+                app:layout_constraintTop_toBottomOf="@id/card_date"
+                app:srcCompat="@drawable/icons8_time_to_pay_24"
+                app:tint="@color/purple_200"
+                tools:ignore="VectorDrawableCompat" />
 
             <TextView
                 android:id="@+id/worked_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/faster_one"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="2dp"
                 android:layout_marginBottom="10dp"
+                android:fontFamily="@font/faster_one"
                 android:text="@string/item_row_work_hours_example"
                 android:textColor="@color/purple_200"
                 android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@+id/card_date"
+
                 app:layout_constraintStart_toEndOf="@+id/worked_start_icon"
-
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="2dp" />
-
-
+                app:layout_constraintTop_toBottomOf="@+id/card_date" />
 
 
             <TextView
                 android:id="@+id/worked_end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
-                android:fontFamily="@font/faster_one"
                 android:layout_marginBottom="10dp"
+                android:fontFamily="@font/faster_one"
                 android:text="@string/item_row_work_hours_example"
                 android:textColor="@color/purple_200"
                 android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@+id/worked_start"
                 app:layout_constraintStart_toEndOf="@+id/worked_start_icon"
 
-                android:layout_marginStart="5dp" />
+                app:layout_constraintTop_toBottomOf="@+id/worked_start" />
 
             <ImageView
                 android:id="@+id/clock_logo"
@@ -149,11 +144,8 @@
                 android:text="@string/item_row_subtitle_example"
                 android:textColor="@color/purple_200"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/worked_end"
-                app:layout_constraintTop_toBottomOf="@+id/worked_end"
-                android:layout_marginBottom="10dp"/>
-
+                app:layout_constraintTop_toBottomOf="@+id/worked_end" />
 
             <ImageView
                 android:id="@+id/settings_btn"
@@ -166,32 +158,126 @@
                 app:tint="@color/purple_200"
                 tools:ignore="VectorDrawableCompat" />
 
-            <TextView
-                android:id="@+id/salary_per_shift_textview"
+            <LinearLayout
+                android:id="@+id/salary_linear_layout"
+                android:layout_marginTop="25dp"
+                app:layout_constraintStart_toStartOf="@+id/hours_worked"
+                app:layout_constraintTop_toBottomOf="@+id/hours_worked"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:fontFamily="@font/concert_one"
+                    android:text="LØN" />
+
+                <TextView
+                    android:id="@+id/salary_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anonymous_pro"
+                    android:text="3"
+                    android:textColor="@color/purple_200" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=",- kr"
+                    android:textColor="@color/purple_200" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/salary_calculations_linear_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/salary_linear_layout"
+                app:layout_constraintStart_toStartOf="@+id/salary_linear_layout"
+                >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/concert_one"
+                        android:text="ANTAL TILLÆG" />
+
+                    <TextView
+                        android:id="@+id/extra_addition_count_tw"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/anonymous_pro"
+                        android:text="3"
+                        android:textColor="@color/purple_200" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:fontFamily="@font/concert_one"
+                        android:textColor="@color/white"
+                        android:text="TILLÆG" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+"
+                        android:textColor="@color/purple_200_dark" />
+
+                    <TextView
+                        android:id="@+id/extra_addition_money_tw"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/anonymous_pro"
+                        android:text="300"
+                        android:textColor="@color/purple_200" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=",- kr"
+                        android:textColor="@color/purple_200" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/sum_salary_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/concert_one"
                 android:text="@string/item_row_calculated_salary_example"
                 android:textColor="@color/purple_200"
+                android:layout_marginBottom="10dp"
                 android:textSize="16sp"
+                app:drawableLeftCompat="@drawable/icons8_coins_18"
+                app:drawableStartCompat="@drawable/icons8_coins_18"
+                app:drawableTint="@color/purple_200"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="2dp"
-                app:layout_constraintBottom_toBottomOf="@+id/salary_per_shift_textview"
-                app:layout_constraintEnd_toStartOf="@+id/salary_per_shift_textview"
-                app:layout_constraintTop_toTopOf="@+id/salary_per_shift_textview"
-                app:srcCompat="@drawable/icons8_coins_18"
-                app:tint="@color/purple_200"
-                tools:ignore="VectorDrawableCompat"
-                android:layout_marginEnd="2dp" />
+                app:layout_constraintStart_toStartOf="@+id/salary_calculations_linear_layout"
+                app:layout_constraintTop_toBottomOf="@+id/salary_calculations_linear_layout" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

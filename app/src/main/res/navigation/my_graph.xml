@@ -30,7 +30,9 @@
             app:enterAnim="@anim/from_down"
             app:exitAnim="@anim/to_up"
             app:popEnterAnim="@anim/from_up"
-            app:popExitAnim="@anim/to_down" />
+            app:popExitAnim="@anim/to_down"
+            app:popUpTo="@id/addShiftFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/navigateFromHomeToAllSalaries"
             app:destination="@id/allSalariesFragment"
@@ -78,7 +80,9 @@
             app:enterAnim="@anim/from_down"
             app:exitAnim="@anim/to_up"
             app:popEnterAnim="@anim/from_left_side"
-            app:popExitAnim="@anim/to_left_side" />
+            app:popExitAnim="@anim/to_left_side"
+            app:popUpTo="@id/extraAdditionFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/allSalariesFragment"
@@ -131,7 +135,8 @@
             app:exitAnim="@anim/to_down"
             app:popEnterAnim="@anim/from_down"
             app:popExitAnim="@anim/to_up"
-            app:popUpTo="@id/addShiftFragment" />
+            app:popUpTo="@id/addShiftFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_extraAdditionFragment_to_editShiftFragment2"
             app:destination="@id/editShiftFragment"

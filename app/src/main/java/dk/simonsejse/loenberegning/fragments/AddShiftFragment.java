@@ -12,35 +12,29 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.timepicker.MaterialTimePicker;
-import com.google.android.material.timepicker.TimeFormat;
-
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
 import java.util.TimeZone;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import dk.simonsejse.loenberegning.ShiftApplication;
 import dk.simonsejse.loenberegning.R;
-import dk.simonsejse.loenberegning.database.AppDatabase;
 import dk.simonsejse.loenberegning.database.Shift;
 import dk.simonsejse.loenberegning.database.ShiftDataAccessObject;
 import dk.simonsejse.loenberegning.databinding.FragmentAddShiftBinding;
-import dk.simonsejse.loenberegning.models.EnumExtraAdditionStoring;
+import dk.simonsejse.loenberegning.directions.NavigateFromAddShiftToExtraAddition;
+import dk.simonsejse.loenberegning.exceptions.ExtraAdditionDateBeforeAfterShiftException;
 import dk.simonsejse.loenberegning.utilities.AlertUtil;
+import dk.simonsejse.loenberegning.utilities.BundleStoringKeyEnum;
 import dk.simonsejse.loenberegning.utilities.DateUtil;
+import dk.simonsejse.loenberegning.utilities.IconUtil;
 import dk.simonsejse.loenberegning.utilities.ParseUtil;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -48,6 +42,7 @@ public class AddShiftFragment extends Fragment {
 
     private FragmentAddShiftBinding fragmentAddShiftBinding;
     private NavController navController;
+    private Shift shift;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +56,12 @@ public class AddShiftFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        if (getArguments() != null){
+            this.shift = (Shift) getArguments().getSerializable(BundleStoringKeyEnum.SHIFT_KEY.key);
+            this.fragmentAddShiftBinding.workStartTw.setText(shift.getShiftStartAt().format(DATE_TIME_FORMATTER));
+            this.fragmentAddShiftBinding.workEndTw.setText(shift.getShiftEndsAt().format(DATE_TIME_FORMATTER));
+        }
+
         this.fragmentAddShiftBinding.workStartTw.setOnTouchListener((v, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_UP){
                 DateUtil.openDatePicker(
@@ -133,29 +134,20 @@ public class AddShiftFragment extends Fragment {
         final String endTimeAsString = this.fragmentAddShiftBinding.workEndTw.getText().toString();
 
         CompletableFuture<String> responseFromDatabaseCall = CompletableFuture.supplyAsync(() -> {
-            AppDatabase db = Room.databaseBuilder(getContext(), AppDatabase.class, "shift").build();
-            final ShiftDataAccessObject shiftDataAccessObject = db.shiftDao();
-            final LocalDateTime startTime;
-            final LocalDateTime endTime;
-            try{
-                startTime = LocalDateTime.parse(startTimeAsString, DATE_TIME_FORMATTER);
-                endTime = LocalDateTime.parse(endTimeAsString, DATE_TIME_FORMATTER);
-               /*if (shiftDataAccessObject.doesShiftExist(date)){
-                   return String.format("Vagten %s findes allerede", dateAsString);
-               } */
-            }catch(DateTimeParseException dateTimeParseException){
-                return String.format("Noget var galt med dine datoer: %s", dateTimeParseException.getMessage());
+            final ShiftDataAccessObject shiftDataAccessObject = ShiftApplication.database.shiftDao();
+            if (this.shift == null){
+                try{
+                    this.shift = ParseUtil.parseToShift(startTimeAsString, endTimeAsString);
+                }catch(DateTimeParseException | ExtraAdditionDateBeforeAfterShiftException message){
+                    return message.getMessage();
+                }
             }
-            final Shift shift = new Shift(
-                   startTime,
-                   endTime
-            );
-            db.shiftDao().insertShift(shift);
-            return String.format("Tilføjet ny vagt d. %s", startTime);
+            shiftDataAccessObject.insertShift(this.shift);
+            return "Tilføjet ny vagt!";
         });
         try{
             final String responseMessage = responseFromDatabaseCall.get();
-            AlertUtil.send(view, responseMessage, BaseTransientBottomBar.LENGTH_LONG);
+            AlertUtil.send(view, "Ny vagt tilføjet!",  responseMessage, IconUtil.ADDED);
             this.navController.navigate(R.id.navigateFromAddShiftToHome);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -174,17 +166,21 @@ public class AddShiftFragment extends Fragment {
         final String workStartText = this.fragmentAddShiftBinding.workStartTw.getText().toString();
         final String workEndText = this.fragmentAddShiftBinding.workEndTw.getText().toString();
         try{
-            Shift shift = ParseUtil.parseToShift(workStartText, workEndText);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(EnumExtraAdditionStoring.SHIFT_KEY.key,  shift);
-            this.navController.navigate(R.id.navigateFromAddShiftToExtraFragment, bundle);
-        }catch(DateTimeParseException parseException){
-            parseException.printStackTrace();
-            AlertUtil.send(getView(), parseException.getMessage(), BaseTransientBottomBar.LENGTH_LONG);
+            final Shift parseToShift = ParseUtil.parseToShift(workStartText, workEndText);
+
+            final boolean sameDate = this.shift != null && this.shift.getShiftStartAt().equals(parseToShift.getShiftStartAt()) && this.shift.getShiftEndsAt().equals(parseToShift.getShiftEndsAt());
+            final Shift shiftArgument = sameDate ? this.shift : parseToShift;
+            this.navController.navigate(new NavigateFromAddShiftToExtraAddition(shiftArgument));
+        }catch(DateTimeParseException | ExtraAdditionDateBeforeAfterShiftException parseException){
+            AlertUtil.send(getView(), "Kunne ikke parse data", parseException.getMessage(), IconUtil.ERROR);
         }
     }
 
     private void popBackStackOnCancelEvent(View view){
         this.navController.popBackStack();
+    }
+
+    public void setShift(Shift shift) {
+        this.shift = shift;
     }
 }

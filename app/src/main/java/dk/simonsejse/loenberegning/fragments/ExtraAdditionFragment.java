@@ -3,13 +3,6 @@ package dk.simonsejse.loenberegning.fragments;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DividerItemDecoration;
-
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -18,18 +11,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 
-import com.google.android.material.snackbar.BaseTransientBottomBar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DividerItemDecoration;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 
 import dk.simonsejse.loenberegning.R;
 import dk.simonsejse.loenberegning.database.Shift;
 import dk.simonsejse.loenberegning.databinding.FragmentExtraAdditionBinding;
-import dk.simonsejse.loenberegning.models.EnumExtraAdditionStoring;
-import dk.simonsejse.loenberegning.models.Extra;
+import dk.simonsejse.loenberegning.directions.NavigateFromExtraToAdd;
 import dk.simonsejse.loenberegning.models.MyRecyclerViewAdapterForExtraAddition;
 import dk.simonsejse.loenberegning.utilities.AlertUtil;
+import dk.simonsejse.loenberegning.utilities.BundleStoringKeyEnum;
+import dk.simonsejse.loenberegning.utilities.IconUtil;
+import dk.simonsejse.loenberegning.utilities.MessagesUtil;
 
 public class ExtraAdditionFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
 
@@ -47,10 +47,10 @@ public class ExtraAdditionFragment extends Fragment implements MenuItem.OnMenuIt
         this.navController = Navigation.findNavController(getActivity(), R.id.navHostControllerFragment);
 
         if (getArguments() == null){
-            AlertUtil.send(getView(), "Der mangler noget data for at kunne gå herind!", BaseTransientBottomBar.LENGTH_LONG);
+            AlertUtil.send(getView(),"Fejl ved data", "Der mangler noget data for at kunne gå herind!", IconUtil.ERROR);
             this.navController.popBackStack();
         }else {
-            this.shift = (Shift) getArguments().getSerializable(EnumExtraAdditionStoring.SHIFT_KEY.key);
+            this.shift = (Shift) getArguments().getSerializable(BundleStoringKeyEnum.SHIFT_KEY.key);
 
             this.fragmentExtraAdditionBinding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -64,12 +64,17 @@ public class ExtraAdditionFragment extends Fragment implements MenuItem.OnMenuIt
                     popupMenu.show();
                 }
             });
-             //extrasForShift = shift == null ? new ArrayList<>() : shift.getExtras();
+
             this.adapter = new MyRecyclerViewAdapterForExtraAddition(shift.getExtras());
             fragmentExtraAdditionBinding.recyclerViewForExtraAdditions.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
             this.fragmentExtraAdditionBinding.recyclerViewForExtraAdditions.setAdapter(adapter);
         }
         return fragmentExtraAdditionBinding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        this.fragmentExtraAdditionBinding.addAdditionButton.setOnClickListener(this::addAdditionEvent);
     }
 
 
@@ -79,24 +84,18 @@ public class ExtraAdditionFragment extends Fragment implements MenuItem.OnMenuIt
         switch (menuItem.getItemId()) {
             case R.id.add_addition_menu_item:
                 DialogFragment dialogFragment = new DialogFragment(fromDialogFragmentModel -> {
-                    if (this.shift.addExtras(new Extra(
-                            fromDialogFragmentModel.localStart,
-                            fromDialogFragmentModel.localEnd,
-                            fromDialogFragmentModel.amount
-                    ))){
-                        ExtraAdditionFragment.this.adapter.notifyItemChanged(0);
-                        AlertUtil.send(getView(), "Tillæg tilføjet!", BaseTransientBottomBar.LENGTH_LONG);
-                    }else {
-                        AlertUtil.send(getView(), "Dit tillæg skal være indenfor tidsrammen!", BaseTransientBottomBar.LENGTH_LONG);
-                    }
-                }, shift);
+                    this.shift = fromDialogFragmentModel.shift;
+                    ExtraAdditionFragment.this.adapter.notifyItemChanged(0);
+                    AlertUtil.send(getView(),"Tilføjet tillæg", MessagesUtil.ADDITION_ADDED, IconUtil.ADDED);
+                }, this.shift);
                 dialogFragment.show(getParentFragmentManager(), "signature");
-
                 return true;
             default:
                 return false;
         }
+    }
 
-
+    protected void addAdditionEvent(View view){
+        this.navController.navigate(new NavigateFromExtraToAdd(this.shift));
     }
 }
