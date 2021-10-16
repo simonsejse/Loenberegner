@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import dk.simonsejse.loenberegning.R;
 import dk.simonsejse.loenberegning.databinding.FragmentHomeBinding;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
 
     private FragmentHomeBinding fragmentHomeBinding;
     private NavController navController;
@@ -58,4 +58,5 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         fragmentHomeBinding = null;
     }
+
 }

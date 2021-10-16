@@ -1,10 +1,11 @@
 package dk.simonsejse.loenberegning.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 import dk.simonsejse.loenberegning.database.Shift;
 
-public class Section {
+public class Section implements Serializable {
 
     private String sectionName;
     private List<Shift> shiftList;

@@ -40,12 +40,6 @@ public class MyChildViewAdapter extends RecyclerView.Adapter<MyChildViewAdapter.
         this.shiftList = shiftList;
     }
 
-    public void addShifts(List<Shift> shifts){
-        this.shiftList.addAll(shifts);
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(this::notifyDataSetChanged);
-    }
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -59,7 +53,7 @@ public class MyChildViewAdapter extends RecyclerView.Adapter<MyChildViewAdapter.
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         final Shift shift = shiftList.get(position);
-        ShiftApplication.THREAD_1.submit(() -> holder.onBind(shift));
+        holder.onBind(shift);
     }
 
     @Override
