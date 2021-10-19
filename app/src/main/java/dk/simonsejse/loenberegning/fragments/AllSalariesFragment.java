@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
@@ -55,12 +56,15 @@ public class AllSalariesFragment extends Fragment {
 
         this.sections = new ArrayList<>();
         this.parentAdapter = new MyParentRecyclerViewAdapterForAllSalaries(this.sections);
-
         final List<Shift> shifts = new ArrayList<>();
 
-        for(int i = 0; i<200; i++){
-            LocalDateTime start = ParseUtil.parseToLocalDateTime("03/10-1999 10:40");
-            LocalDateTime end = ParseUtil.parseToLocalDateTime("03/10-1999 16:40");
+        for(int i = 0; i<1000; i++){
+            int r= new Random().nextInt(10);
+            System.out.println(r);
+            LocalDateTime start = LocalDateTime.now();
+            LocalDateTime end = LocalDateTime.now().plusHours(r);
+            end.plusHours(r);
+            System.out.println(end);
             final Shift shift = new Shift(start, end);
             shifts.add(shift);
         }
